@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-period-table
+      author: demis@gematik.de
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: period
+            columns:
+              - column:
+                  name: period_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_period
+              - column:
+                  name: chain_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: min_year
+                  type: smallint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: max_year
+                  type: smallint
+                  constraints:
+                    nullable: false
+        - createIndex:
+            indexName: idx_period_chain_id
+            tableName: period
+            columns:
+              - column:
+                  name: chain_id
+  - changeSet:
+      id: db-user-permission-for-table-period
+      author: demis@gematik.de
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - sql:
+            sql: >
+              GRANT SELECT, INSERT, UPDATE ON TABLE period TO "${db-user-service}";
+  - changeSet:
+      id: create-index-period-max-year
+      author: demis@gematik.de
+      changes:
+        - createIndex:
+            indexName: idx_period_max_year
+            tableName: period
+            columns:
+              - column:
+                  name: max_year

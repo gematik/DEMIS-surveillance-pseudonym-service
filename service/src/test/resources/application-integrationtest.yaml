@@ -1,0 +1,27 @@
+logging:
+  level:
+    de.gematik.demis.storage: DEBUG
+    org.hibernate:
+      SQL: DEBUG
+      orm.jdbc.bind: trace
+
+spring:
+  liquibase:
+    enabled: true
+    user: ars-pseudo-ddl
+    parameters:
+      db-user-service: ars-pseudo-user
+      db-user-purger: ars-pseudo-purger
+
+sps:
+  hash:
+    # Note: if you ever change this pepper secret you have to rehash the pseudonyms in sql/pseudonym-chain-period-data.sql
+    # You can use the HashGenerator for that
+    pepper: 0WAoZ+nfpzBJrducAjGm0oBTnFB+jFfxwA/dcFGhsqA=
+  period:
+    max-lifetime-in-years: 3
+    adjust-reference-day: --01-01
+
+feature:
+  flag:
+    individual_pseudonym: true

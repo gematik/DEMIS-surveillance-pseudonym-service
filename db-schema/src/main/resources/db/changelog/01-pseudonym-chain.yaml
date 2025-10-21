@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-pseudonym-chain-table
+      author: demis@gematik.de
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: pseudonym_chain
+            columns:
+              - column:
+                  name: pseudonym
+                  type: bytea
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_pseudonym_chain
+              - column:
+                  name: chain_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+        - sql:
+            splitStatements: false
+            stripComments: true
+            sql: >
+              ALTER TABLE pseudonym_chain
+              ADD CONSTRAINT chk_pseudonym_length_32
+              CHECK (octet_length(pseudonym) = 32);
+  - changeSet:
+      id: db-user-permission-for-table-pseudonym-chain
+      author: demis@gematik.de
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - sql:
+            sql: >
+              GRANT SELECT, INSERT ON TABLE pseudonym_chain TO "${db-user-service}";
+  - changeSet:
+      id: create-index-pseudonym-chain-chain-id
+      author: demis@gematik.de
+      changes:
+        - createIndex:
+            indexName: idx_pseudonym_chain_chain_id
+            tableName: pseudonym_chain
+            columns:
+              - column:
+                  name: chain_id

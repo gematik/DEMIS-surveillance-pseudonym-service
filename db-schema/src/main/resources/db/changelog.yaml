@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: classpath:db/changelog/01-pseudonym-chain.yaml
+  - include:
+      file: classpath:db/changelog/02-period.yaml
+  - include:
+      file: classpath:db/changelog/03-chain.yaml
+  - include:
+      file: classpath:db/changelog/04-purger-permissions.yaml

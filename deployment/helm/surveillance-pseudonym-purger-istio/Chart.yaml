@@ -1,0 +1,6 @@
+apiVersion: v2
+name: surveillance-pseudonym-purger-istio
+description: DEMIS surveillance-pseudonym-purger Istio Configuration
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
