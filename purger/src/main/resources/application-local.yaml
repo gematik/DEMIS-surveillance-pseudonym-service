@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/surveillance-pseudonym
+    username: ars-pseudo-purger
+    password: gLppO6SmeZHqJ7
+
+logging:
+  level:
+    de.gematik.demis.surveillance.pseudonym: DEBUG
+    org:
+      hibernate:
+        SQL: DEBUG
+#        orm.jdbc.bind: trace
+
+sps:
+  purger:
+    batch-size: 100
+    retention-years: 2

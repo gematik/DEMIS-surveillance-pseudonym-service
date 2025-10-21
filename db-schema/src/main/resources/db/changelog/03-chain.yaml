@@ -1,0 +1,81 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-chain-table
+      author: demis@gematik.de
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: chain
+            columns:
+              - column:
+                  name: chain_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_chain
+  - changeSet:
+      id: db-user-permission-for-table-chain
+      author: demis@gematik.de
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - sql:
+            # Update permission is mandatory for exclusive lock
+            sql: >
+              GRANT SELECT, UPDATE, INSERT ON TABLE chain TO "${db-user-service}";
+  - changeSet:
+      id: insert-missing-chain-rows
+      author: demis@gematik.de
+      changes:
+        - sql:
+            stripComments: true
+            splitStatements: true
+            sql: |
+              INSERT INTO chain (chain_id)
+              SELECT DISTINCT pc.chain_id
+              FROM pseudonym_chain pc
+              LEFT JOIN chain c ON c.chain_id = pc.chain_id
+              WHERE c.chain_id IS NULL;
+  - changeSet:
+      id: add-fk-pseudonym-chain-chain
+      author: demis@gematik.de
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: pseudonym_chain
+            baseColumnNames: chain_id
+            constraintName: fk_pseudonym_chain_chain
+            referencedTableName: chain
+            referencedColumnNames: chain_id
+  - changeSet:
+      id: add-fk-period-chain
+      author: demis@gematik.de
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: period
+            baseColumnNames: chain_id
+            constraintName: fk_period_chain
+            referencedTableName: chain
+            referencedColumnNames: chain_id
+  - changeSet:
+      id: add-column-createdAt-to-chain
+      author: demis@gematik.de
+      changes:
+        - addColumn:
+            tableName: chain
+            columns:
+              - column:
+                  name: created_at
+                  type: TIMESTAMPTZ
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create-index-chain-createdAt
+      author: demis@gematik.de
+      changes:
+        - createIndex:
+            indexName: idx_chain_created_at
+            tableName: chain
+            columns:
+              - column:
+                  name: created_at

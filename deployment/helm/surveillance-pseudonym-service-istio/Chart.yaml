@@ -1,0 +1,6 @@
+apiVersion: v2
+name: surveillance-pseudonym-service-istio
+description: DEMIS surveillance-pseudonym-service Istio Configuration
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

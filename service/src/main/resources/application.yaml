@@ -1,0 +1,45 @@
+info:
+  app:
+    name: @project.name@
+    version: @project.version@
+
+spring:
+  config:
+    import: classpath:/base-config-application.yaml
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+  liquibase:
+    enabled: ${SPRING_LIQUIBASE_ENABLED:false}
+    change-log: classpath:db/changelog.yaml
+    url: ${DB_URL}
+    user: ${LIQUIBASE_DB_USER}
+    parameters:
+      db-user-service: ${DB_USER}
+      db-user-purger: ${PARAM_LIQUIBASE_DB_USER_PURGER:_UNDEFINED_}
+
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${DB_URL}
+    username: ${DB_USER}
+
+    hikari:
+      minimum-idle: 2
+      maximum-pool-size: 10
+
+sps:
+  hash:
+    # 256 bit Base64 encoded
+    pepper: PleaseSetViaKubernetesSecret
+  period:
+    max-lifetime-in-years: 5
+    # format: --MM-dd
+    adjust-reference-day: --01-01
+
+feature:
+  flag:
+    individual_pseudonym: false
