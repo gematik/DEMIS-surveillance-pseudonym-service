@@ -29,14 +29,11 @@ spec:
         metadata:
           labels:
             {{- include "surveillance-pseudonym-purger.labels" . | nindent 12 }}
+          {{- with .Values.podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
         spec:
-          metadata:
-            labels:
-              {{- include "surveillance-pseudonym-purger.labels" . | nindent 14 }}
-            {{- with .Values.podAnnotations }}
-            annotations:
-              {{- toYaml . | nindent 14 }}
-            {{- end }}
           restartPolicy: OnFailure
           volumes:
             - name: tmp-volume

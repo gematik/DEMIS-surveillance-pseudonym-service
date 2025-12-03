@@ -2,6 +2,9 @@
  
 # Release Notes Surveillance-Pseudonym-Service
 
+## Release 1.0.1
+- fixed job annotations in helmchart
+
 ## Release 1.0.0
 
 ### added
