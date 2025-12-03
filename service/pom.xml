@@ -6,12 +6,16 @@
     <parent>
         <groupId>de.gematik.demis</groupId>
         <artifactId>surveillance-pseudonym</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>surveillance-pseudonym-service</artifactId>
     <packaging>jar</packaging>
+
+    <properties>
+        <testcontainers.version>2.0.2</testcontainers.version>
+    </properties>
 
     <dependencies>
         <dependency>
