@@ -42,7 +42,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 @SpringBootTest(
     useMainMethod = SpringBootTest.UseMainMethod.ALWAYS,
     properties = {
-      "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration"
+      "spring.autoconfigure.exclude=org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration,org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration"
     })
 class SurveillancePseudonymApplicationIntegrationTest {
   @MockitoBean PseudonymChainRepository pseudonymChainRepository;

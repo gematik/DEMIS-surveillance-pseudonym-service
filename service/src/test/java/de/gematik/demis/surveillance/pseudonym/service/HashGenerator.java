@@ -27,7 +27,7 @@ package de.gematik.demis.surveillance.pseudonym.service;
  * #L%
  */
 
-import com.github.dockerjava.zerodep.shaded.org.apache.commons.codec.binary.Hex;
+import com.github.dockerjava.zerodep.shaded.org.apache.hc.client5.http.utils.Hex;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
