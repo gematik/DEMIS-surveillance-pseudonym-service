@@ -2,9 +2,10 @@
  
 # Release Notes Surveillance-Pseudonym-Service
 
-## Release 1.0.2
+## Release 1.2.0
+- updated base-image and updated from java 21 to java 25
 - Removed istio helm chart
-- updated spring-parent to 2.14.20
+- upgraded to spring boot 4
 
 ## Release 1.0.1
 - fixed job annotations in helmchart
