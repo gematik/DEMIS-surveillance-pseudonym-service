@@ -21,7 +21,3 @@ sps:
   period:
     max-lifetime-in-years: 3
     adjust-reference-day: --01-01
-
-feature:
-  flag:
-    individual_pseudonym: true
