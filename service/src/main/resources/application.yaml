@@ -39,7 +39,3 @@ sps:
     max-lifetime-in-years: 5
     # format: --MM-dd
     adjust-reference-day: --01-01
-
-feature:
-  flag:
-    individual_pseudonym: false

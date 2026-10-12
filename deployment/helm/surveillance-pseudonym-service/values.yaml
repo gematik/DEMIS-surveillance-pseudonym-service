@@ -1,6 +1,7 @@
 # Default values for surveillance-pseudonym-service.
 debug:
   enable: false
+  params: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:9000"
 
 # Number of Pod Replicas desired
 replicaCount: 2
@@ -29,8 +30,8 @@ deploymentLabels: {}
 # Define custom Container Entrypoint and Arguments (e.g. JVM Tuning)
 # If not given, the Entrypoint defined in Dockerfile will be used
 application:
-  entrypoint: ["java"]
-  parameters: ["-XX:ActiveProcessorCount=2", "-XX:MaxRAMPercentage=80.0", "-XX:+TieredCompilation", "-XX:+UseG1GC", "-jar","/app.jar"]
+  entrypoint: []
+  parameters: []
 
 # Define Image Pull Secrets if using private registry
 imagePullSecrets: []
@@ -57,11 +58,12 @@ podAnnotations:
 
 # Environment Variables to be defined
 customEnvVars:
+  JAVA_TOOL_OPTIONS: "-XX:ActiveProcessorCount=2 -XX:MaxRAMPercentage=25.0 -XX:MaxMetaspaceSize=160m -XX:+UseG1GC"
+  TZ: "Europe/Berlin"
   DB_URL: "jdbc:postgresql://pgbouncer.demis.svc.cluster.local:5432/surveillance-pseudonym"
   DB_USER: xxx-pseudo-user
   LIQUIBASE_DB_USER: xxx-pseudo-ddl
   SPRING_LIQUIBASE_ENABLED: false
-  FEATURE_FLAG_INDIVIDUAL_PSEUDONYM: false
 
 secret:
   dbPwdUser:
@@ -125,7 +127,7 @@ resources:
   limits:
     memory: "500Mi"
   requests:
-    cpu: "1000m"
+    cpu: "100m"
     memory: "500Mi"
 
 autoscaling:

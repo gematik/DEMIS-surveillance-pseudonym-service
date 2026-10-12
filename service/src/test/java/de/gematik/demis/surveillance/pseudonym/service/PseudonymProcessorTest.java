@@ -28,27 +28,73 @@ package de.gematik.demis.surveillance.pseudonym.service;
  */
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import de.gematik.demis.surveillance.pseudonym.api.PseudonymInput;
 import de.gematik.demis.surveillance.pseudonym.api.PseudonymOutput;
+import de.gematik.demis.surveillance.pseudonym.service.ChainService.ChainResult;
 import java.time.LocalDate;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.util.Pair;
 
+@ExtendWith(MockitoExtension.class)
 class PseudonymProcessorTest {
 
-  private final PseudonymProcessor underTest = new PseudonymProcessor(null, null, null);
+  @Mock HashService hashServiceMock;
+  @Mock ChainService chainServiceMock;
+  @Mock PeriodService periodServiceMock;
+  @InjectMocks PseudonymProcessor underTest;
+
+  @Captor ArgumentCaptor<String> hashArgumentCaptor;
+  @Captor ArgumentCaptor<Pair<byte[], byte[]>> chainArgumentCaptor;
+  @Captor ArgumentCaptor<ChainResult> periodFirstArgumentCaptor;
+  @Captor ArgumentCaptor<LocalDate> periodSecondArgumentCaptor;
 
   @Test
   void createPseudonym() {
     final var input = new PseudonymInput("a", "b", LocalDate.of(2025, 7, 30));
-    final var expected =
-        PseudonymOutput.builder()
-            .system("https://demis.rki.de/fhir/sid/SurveillancePatientPseudonym")
-            .value("urn:uuid:10101010-1010-1010-1010-101010101010")
-            .build();
+    final byte[] hash1 = new byte[] {1, 2, 3};
+    final byte[] hash2 = new byte[] {4, 5, 6};
+    final ChainResult chainResult = new ChainResult(UUID.randomUUID(), false);
+    final UUID periodUuid = UUID.randomUUID();
+    final PseudonymOutput expected = toOutput(periodUuid.toString());
+
+    when(hashServiceMock.hash(anyString())).thenReturn(hash1).thenReturn(hash2);
+    when(chainServiceMock.chain(any())).thenReturn(chainResult);
+    when(periodServiceMock.period(any(), any())).thenReturn(periodUuid);
 
     final PseudonymOutput result = underTest.createPseudonym(input);
 
     assertThat(result).isEqualTo(expected);
+
+    verify(hashServiceMock, times(2)).hash(hashArgumentCaptor.capture());
+    assertThat(hashArgumentCaptor.getAllValues())
+        .containsExactly(input.pseudonym1(), input.pseudonym2());
+
+    verify(chainServiceMock).chain(chainArgumentCaptor.capture());
+    assertThat(chainArgumentCaptor.getValue()).isEqualTo(Pair.of(hash1, hash2));
+
+    verify(periodServiceMock)
+        .period(periodFirstArgumentCaptor.capture(), periodSecondArgumentCaptor.capture());
+    assertThat(periodFirstArgumentCaptor.getValue()).isEqualTo(chainResult);
+    assertThat(periodSecondArgumentCaptor.getValue()).isEqualTo(input.date());
+  }
+
+  private PseudonymOutput toOutput(final String newPseudonym) {
+    return PseudonymOutput.builder()
+        .system("https://demis.rki.de/fhir/sid/SurveillancePatientPseudonym")
+        .value("urn:uuid:" + newPseudonym)
+        .build();
   }
 }

@@ -1,9 +1,9 @@
 # Declare Source Digest for the Base Image
-ARG SOURCE_DIGEST=46cefc61289b58c2bf566c433f63481b479f98f99d8debbed7817b701ca48a82
-FROM gematik1/osadl-alpine-openjdk25-jre:1.0.4@sha256:${SOURCE_DIGEST}
+ARG SOURCE_DIGEST=sha256:cbf4e3d8fca40adc95f411195fe5beb1879a97ce29a7e81f933e64408a1b8509
+FROM gematik1/osadl-alpine-openjdk25-jre:1.1.0@${SOURCE_DIGEST}
 # Redeclare Source Digest to be used in the build context
 # https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
-ARG SOURCE_DIGEST=46cefc61289b58c2bf566c433f63481b479f98f99d8debbed7817b701ca48a82
+ARG SOURCE_DIGEST
 
 # The STOPSIGNAL instruction sets the system call signal that will be sent to the container to exit
 # SIGTERM = 15 - https://de.wikipedia.org/wiki/Signal_(Unix)
@@ -26,7 +26,7 @@ ARG GROUPID=10000
 COPY --chown=$USERID:$GROUPID target/surveillance-pseudonym-service.jar /app.jar
 
 # Run as User (not root)
-USER $USERID:$USERID
+USER $USERID:$GROUPID
 
 ENTRYPOINT ["java", "-jar", "/app.jar"]
 

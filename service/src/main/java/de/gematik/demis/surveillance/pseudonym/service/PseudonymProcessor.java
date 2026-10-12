@@ -31,10 +31,7 @@ import de.gematik.demis.surveillance.pseudonym.api.PseudonymInput;
 import de.gematik.demis.surveillance.pseudonym.api.PseudonymOutput;
 import de.gematik.demis.surveillance.pseudonym.service.ChainService.ChainResult;
 import java.util.UUID;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
@@ -56,23 +53,14 @@ public class PseudonymProcessor {
   private final ChainService chainService;
   private final PeriodService periodService;
 
-  @Value("${feature.flag.individual_pseudonym}")
-  @Setter(AccessLevel.PACKAGE)
-  private boolean individualPseudonym;
-
   /**
    * At the moment the input is ignored and a fix pseudonym is returned. This will be changed soon
    * (next user story)
    */
   public PseudonymOutput createPseudonym(final PseudonymInput input) {
     final UUID newPseudonym;
-    if (individualPseudonym) {
-      final ChainResult chainResult = chainService.chain(hashPseudonyms(input));
-      newPseudonym = periodService.period(chainResult, input.date());
-    } else {
-      newPseudonym = generatePseudonym();
-    }
-
+    final ChainResult chainResult = chainService.chain(hashPseudonyms(input));
+    newPseudonym = periodService.period(chainResult, input.date());
     return toOutput(newPseudonym);
   }
 
@@ -85,9 +73,5 @@ public class PseudonymProcessor {
   private PseudonymOutput toOutput(final UUID pseudonym) {
     final String value = UUID_PREFIX + pseudonym;
     return PseudonymOutput.builder().system(CODE_SYSTEM).value(value).build();
-  }
-
-  private UUID generatePseudonym() {
-    return UUID.fromString("10101010-1010-1010-1010-101010101010");
   }
 }
