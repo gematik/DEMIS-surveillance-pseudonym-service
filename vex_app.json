@@ -1,0 +1,166 @@
+{
+  "bomFormat" : "CycloneDX",
+  "specVersion" : "1.5",
+  "serialNumber" : "urn:uuid:6540f63b-a0bd-40c8-b498-c1c1feaee646",
+  "version" : 1,
+  "metadata" : {
+    "timestamp" : "2026-08-13T16:05:31Z",
+    "tools" : [
+      {
+        "vendor" : "OWASP",
+        "name" : "Dependency-Track",
+        "version" : "4.14.2-gematik-15"
+      }
+    ],
+    "component" : {
+      "type" : "library",
+      "bom-ref" : "e4bc8a1a-8885-4879-a396-94be9cb0cd77",
+      "publisher" : "gematik GmbH",
+      "group" : "de.gematik.demis",
+      "name" : "surveillance-pseudonym (Maven Project)",
+      "version" : "1.2.1 (Main)",
+      "description" : "Service for the creation of pseudonyms in the context of surveillance programs",
+      "purl" : "pkg:maven/de.gematik.demis/surveillance-pseudonym@1.2.1-b71?type=pom",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://github.com/gematik/DEMIS-spring-parent/surveillance-pseudonym"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/gematik/DEMIS-spring-parent"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/gematik/DEMIS-spring-parent/surveillance-pseudonym"
+        }
+      ]
+    }
+  },
+  "vulnerabilities" : [
+    {
+      "bom-ref" : "7e538f3b-3931-4c1c-8c27-b4ddf60d99b8",
+      "id" : "GHSA-5jmj-h7xm-6q6v",
+      "source" : {
+        "name" : "GITHUB",
+        "url" : "https://github.com/advisories"
+      },
+      "ratings" : [
+        {
+          "source" : {
+            "name" : "GITHUB",
+            "url" : "https://github.com/advisories"
+          },
+          "score" : 5.3,
+          "severity" : "medium",
+          "method" : "CVSSv31",
+          "vector" : "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
+        }
+      ],
+      "cwes" : [
+        915
+      ],
+      "description" : "## Summary\nIn `BeanDeserializerBase.createContextual()`, per-property `@JsonIgnoreProperties` exclusions are applied by `_handleByNameInclusion()`, producing a `contextual` deserializer whose `BeanPropertyMap` has the ignored properties removed. The subsequent per-property case-insensitivity block (triggered by `@JsonFormat(ACCEPT_CASE_INSENSITIVE_PROPERTIES)`) rebuilds from `this._beanProperties` (the original, unfiltered map) instead of `contextual._beanProperties`, then overwrites the filtered map — restoring every property `_handleByNameInclusion` had just removed. The ignored property becomes writable again.\n\n## Impact\nAn application that both enables case-insensitive matching and relies on per-property `@JsonIgnoreProperties` to keep a field unwritable can have that field set from untrusted JSON (mass-assignment-style write).\n\n## Affected / Patched\nWill be fixed in 2.18.9, 2.21.5, 2.22.1 and 3.1.4.\n\n## Severity / CWE\nMaintainer: minor. Reporter: Moderate. CWE-915.\n\n## Upstream fix\nFasterXML/jackson-databind#5962 (PR #5964, `0e1b0b2`), milestone 3.1.4. Released 2026-06-04.",
+      "published" : "2026-06-23T21:23:58Z",
+      "updated" : "2026-07-16T21:25:47Z",
+      "affects" : [
+        {
+          "ref" : "e4bc8a1a-8885-4879-a396-94be9cb0cd77"
+        }
+      ]
+    },
+    {
+      "bom-ref" : "40e46fc4-78d0-4aa0-907e-f2cb7ff6625f",
+      "id" : "GHSA-jhq6-gfmj-v8fx",
+      "source" : {
+        "name" : "GITHUB",
+        "url" : "https://github.com/advisories"
+      },
+      "ratings" : [
+        {
+          "source" : {
+            "name" : "GITHUB",
+            "url" : "https://github.com/advisories"
+          },
+          "score" : 2.9,
+          "severity" : "low",
+          "method" : "CVSSv4",
+          "vector" : "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:P/RE:M/U:Green"
+        }
+      ],
+      "cwes" : [
+        502
+      ],
+      "description" : "Deserialization of untrusted data vulnerability in QOS.CH Sarl logback logback-core (HardenedObjectInputStream (logback-core) modules) allows Object Injection, albeit heavily restricted.\n\nMore precisely, an attacker able to influence serialized data sent to SimpleSocketServer or SimpleSSLSocketServer can instantiate Proxy objects.\n\n\nAlthough deserialization is heavily restricted by HardenedObjectInputStream and no practical way to achieve remote code execution or significant privilege  escalation has been identified, this issue constitutes a bypass of the  intended security restrictions.\n\n\n\nThis issue affects logback: through 1.5.33 inclusive.",
+      "published" : "2026-06-01T15:30:40Z",
+      "updated" : "2026-07-15T21:52:55Z",
+      "affects" : [
+        {
+          "ref" : "e4bc8a1a-8885-4879-a396-94be9cb0cd77"
+        }
+      ]
+    },
+    {
+      "bom-ref" : "9b0a5f61-5fe7-4598-9226-4cb4ae572991",
+      "id" : "GHSA-5gvw-p9qm-jgwh",
+      "source" : {
+        "name" : "GITHUB",
+        "url" : "https://github.com/advisories"
+      },
+      "ratings" : [
+        {
+          "source" : {
+            "name" : "GITHUB",
+            "url" : "https://github.com/advisories"
+          },
+          "score" : 6.5,
+          "severity" : "medium",
+          "method" : "CVSSv31",
+          "vector" : "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N"
+        }
+      ],
+      "cwes" : [
+        863
+      ],
+      "description" : "## Summary\n`UnwrappedPropertyHandler.processUnwrapped()` replays the buffered JSON for a `@JsonUnwrapped` property by iterating its properties and calling `prop.deserializeAndSet()` with **no `prop.visibleInView(ctxt.getActiveView())` guard** — the exact guard `processUnwrappedCreatorProperties()` received in the #5971 / GHSA-rcqc-6cw3-h962 fix, and the guard `BeanDeserializer.deserializeWithUnwrapped` applies to directly-matched properties. As a result, a property annotated with both `@JsonView(PrivilegedView.class)` and `@JsonUnwrapped` is written from attacker JSON even when deserializing under a more-restrictive active view.\n\n**Correction to the original framing (runtime-verified):** the gap is NOT a per-field inner `@JsonView` (the unwrapped sub-object's own `BeanDeserializer` gates inner fields correctly). The unchecked gate is the **view of the unwrapped CONTAINER property**.\n\n## Intent proof (runtime, 2.x HEAD 21dd70dd and 3.x HEAD 7a5939d6)\nAn `@JsonView(AdminView)` property that is NOT `@JsonUnwrapped` → `null` under `PublicView` (correctly gated). The identical property WITH `@JsonUnwrapped` → fully populated (bypass). The fix the creator path already received, not applied to the regular-property method.\n\n## Impact — write-side mass-assignment / privilege escalation\n`@JsonView` is commonly used as a write-side authorization guard: a public endpoint binds the body under `readerWithView(PublicView.class)` and groups privileged state in a nested object whose container property is `@JsonView(AdminView)`. When that property is `@JsonUnwrapped`, an untrusted caller mass-assigns it. PoC: a self-service registration where `AccountFlags{role,approved,creditBalance}` is `@JsonView(AdminView) @JsonUnwrapped`; attacker JSON `{role:ADMIN,approved:true,creditBalance:1000000}` under `PublicView` binds all three → approved admin with arbitrary balance. The failing gate is a WRITE gate, hence integrity-high (`C:N/I:H/A:N`); no worse than the C:L/I:L parent and arguably higher as `@JsonView`-as-write-guard is the exact use case #5971/#5969 defended.\n\n## Affected\n- `com.fasterxml.jackson.core:jackson-databind` 2.x: confirmed bypass at 21dd70dd (== released 2.21.4 / 2.22.0 line; includes the #5973 backport). `DEFAULT_VIEW_INCLUSION` default=true.\n- `tools.jackson.core:jackson-databind` 3.x: confirmed bypass at HEAD 7a5939d6 (latest 3.x). `DEFAULT_VIEW_INCLUSION` default=false → the stock-config repro is the common shape where privileged inner fields are individually `@JsonView(PublicView)` and the developer relies on the container `@JsonView(AdminView)`; the 3.x PoC mass-assigns role/approved/creditBalance under PublicView. (The other simultaneous report's PoC was reportedly fixed on 3.x; this distinct container-property path is not.)\n\n## Additive variants (runtime-confirmed both branches; all closed by the same one-line guard)\n- nested `@JsonUnwrapped` (unwrapped-in-unwrapped) — recursive bypass.\n- merge / `readerWithView(...).withValueToUpdate(...)` (PATCH/partial-update) — bypass; non-unwrapped merge control gates correctly.\n- builder-based deserializer (`@JsonDeserialize(builder=...)`) — `BuilderBasedDeserializer` routes through the same `processUnwrapped`.\n- Honest non-findings: read-side serialization correctly honors views (no leak); `@JsonAnySetter`+view and `@JsonTypeInfo`+`@JsonUnwrapped` are separate/unsupported behaviors, not this bug.\n\n## Fix\nAdd `prop.visibleInView(ctxt.getActiveView())` (when `MapperFeature.DEFAULT_VIEW_INCLUSION`/active-view applies) to the `processUnwrapped()` property loop, mirroring `processUnwrappedCreatorProperties()`. One change closes the impact PoC + all three variants across `BeanDeserializer` and `BuilderBasedDeserializer`. Full runnable PoCs (2.x + 3.x) + variant harnesses available on request.",
+      "published" : "2026-07-21T22:00:43Z",
+      "updated" : "2026-08-03T20:51:32Z",
+      "affects" : [
+        {
+          "ref" : "e4bc8a1a-8885-4879-a396-94be9cb0cd77"
+        }
+      ]
+    },
+    {
+      "bom-ref" : "359b531c-400f-4782-be59-e56c50a853ef",
+      "id" : "GHSA-mhm7-754m-9p8w",
+      "source" : {
+        "name" : "GITHUB",
+        "url" : "https://github.com/advisories"
+      },
+      "ratings" : [
+        {
+          "source" : {
+            "name" : "GITHUB",
+            "url" : "https://github.com/advisories"
+          },
+          "score" : 6.5,
+          "severity" : "medium",
+          "method" : "CVSSv31",
+          "vector" : "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N"
+        }
+      ],
+      "cwes" : [
+        863
+      ],
+      "description" : "## Summary\n\nIn `BeanDeserializer.deserializeUsingPropertyBasedWithExternalTypeId`, the active-view (`@JsonView`) filter was applied only to the regular bean-property branch; the creator-property branch performed no `creatorProp.visibleInView(activeView)` check. A constructor parameter annotated with both `@JsonView(RestrictedView.class)` and `@JsonTypeInfo(use=Id.NAME,\n  include=As.EXTERNAL_PROPERTY)` is populated from attacker JSON even when a more restrictive view is active.\n\n  This is a patch gap. GHSA-5hh8 (CVE-2026-54517) and GHSA-rcqc (CVE-2026-54518) descriptions cover only the main property-based path and the unwrapped-creator path respectively; the external-type-id creator path was fixed on the 3.x line via #6004 (\"Extend #5969/#5971 fixes to ... external-type-id case in regular BeanDeserializer\", commit 7dc7a17, 2026-05-22) but\n  **the fix was never backported to 2.21 or 2.18**. Users on 2.21.4 and 2.18.8 who upgraded per the published advisories remain vulnerable to the same `@JsonView` bypass technique via a different code path.\n\n## Vulnerable Code Path\n\nFile: `com/fasterxml/jackson/databind/deser/BeanDeserializer.java`\nMethod: `deserializeUsingPropertyBasedWithExternalTypeId`\n\nOn 2.21.4 (and 2.18.8), the creator-property branch (around line 1125-1158) checks `creatorProp.isInjectionOnly()` and hands off to `ext.handlePropertyValue(...)` / `buffer.assignParameter(...)` without ever consulting `visibleInView(activeView)`:\n\n ```java\n  if (creatorProp != null) {\n      // [databind#1381]: if useInput=FALSE, skip deserialization from input\n      if (creatorProp.isInjectionOnly()) { ... }\n      // NO visibleInView(activeView) CHECK HERE\n      if (!ext.handlePropertyValue(p, ctxt, propName, null)) {\n          if (buffer.assignParameter(creatorProp, ...)) { ... }\n      }\n      continue;\n  }\n```\n\nOn 3.1.4, the same branch contains the additional guard (commit 7dc7a17):\n\n ```java\n   if (creatorProp != null) {\n      // [databind#5971]: must honor active view here too\n      if ((activeView != null) && !creatorProp.visibleInView(activeView)) {\n          p.skipChildren();\n          continue;\n      }\n      ...\n  }\n```\n\nThe 2.21 and 2.18 backport PRs (#6005 and #6003) only backported the main-path fixes from #5969/#5971; the external-type-id fix from #6004 was not backported. The maintainer closed #6005\n  with \"got changes merged forward, looks like it's all covered now\", but the forward-merge did not include the ExtTypeId creator branch.\n\n  Proof of Concept\n\n  Compiles and runs against jackson-databind 2.21.4:\n \n```java\n  import com.fasterxml.jackson.annotation.*;\n  import com.fasterxml.jackson.databind.ObjectMapper;\n\n  public class JsonViewExternalTypeIdBypass {\n      public static class PublicView {}\n      public static class AdminView extends PublicView {}\n\n      public static abstract class Asset { public String name; }\n      public static class PublicAsset extends Asset {}\n      public static class AdminAsset extends Asset { public String secret; }\n\n      public static class Container {\n          @JsonTypeInfo(use = JsonTypeInfo.Id.NAME,\n                  include = JsonTypeInfo.As.EXTERNAL_PROPERTY,\n                  property = \"kind\")\n          @JsonSubTypes({\n              @JsonSubTypes.Type(value = PublicAsset.class, name = \"pub\"),\n              @JsonSubTypes.Type(value = AdminAsset.class,  name = \"admin\")\n          })\n          @JsonView(AdminView.class)\n          public Asset asset;\n\n          public String label;\n\n          @JsonCreator\n          public Container(\n                  @JsonProperty(\"label\") String label,\n                  @JsonProperty(\"asset\") @JsonView(AdminView.class) Asset asset) {\n              this.label = label;\n              this.asset = asset;\n          }\n      }\n\n      public static class Wrapper {\n          @JsonView(PublicView.class)\n          public Container data;\n      }\n\n      public static void main(String[] args) throws Exception {\n          // Admin-only \"asset\" should be blocked when reading with PublicView\n          String json = \"{\\\"data\\\":{\\\"label\\\":\\\"hello\\\",\\\"kind\\\":\\\"admin\\\",\"\n                      + \"\\\"asset\\\":{\\\"name\\\":\\\"foo\\\",\\\"secret\\\":\\\"LEAKED\\\"}}}\";\n\n          ObjectMapper om = new ObjectMapper();\n          Wrapper r = om.readerWithView(PublicView.class)\n                  .forType(Wrapper.class)\n                  .readValue(json);\n\n          System.out.println(r.data);\n          // Actual on 2.21.4:   Container{label='hello', asset=AdminAsset{name='foo', secret='LEAKED'}}\n          // Expected (secure):  Container{label='hello', asset=null}\n          if (r.data.asset != null && r.data.asset instanceof AdminAsset) {\n              System.out.println(\"[!!] BYPASS CONFIRMED — admin-only asset populated under PublicView\");\n          }\n      }\n  }\n```\n\nA control case that removes include = As.EXTERNAL_PROPERTY (forcing the normal property-based path) correctly returns asset = null, confirming the bypass is specific to the ExternalTypeId\n  code path and not a misconfiguration.\n\n### Impact\n\n  View-restricted (e.g. admin-only) creator properties can be populated from untrusted input where @JsonView is used as a write-side authorization boundary. Typical victims are Spring Boot\n  REST controllers that use @JsonView(PublicView.class) on the request body to whitelist user-settable fields — an attacker can inject the restricted creator parameter (including choosing\n  the polymorphic subtype via the sibling kind/type-id property) by combining it with a polymorphic @JsonTypeInfo(EXTERNAL_PROPERTY) annotation on the same field.\n\n- CWE-863 (Incorrect Authorization)\n- Same impact class as CVE-2026-54517 / CVE-2026-54518\n- No RCE, no DoS — this is an access-control / mass-assignment bypass\n\n### Trigger Conditions\n\nDeveloper code must combine (no opt-in user configuration required):\n\n1. Property-based @JsonCreator on the outer type\n2. A creator parameter annotated with @JsonView(RestrictedView.class)\n3. The same parameter annotated with @JsonTypeInfo(use=Id.NAME, include=As.EXTERNAL_PROPERTY, property=\"...\")",
+      "published" : "2026-07-21T19:40:12Z",
+      "updated" : "2026-07-21T19:40:13Z",
+      "affects" : [
+        {
+          "ref" : "e4bc8a1a-8885-4879-a396-94be9cb0cd77"
+        }
+      ]
+    }
+  ]
+}
