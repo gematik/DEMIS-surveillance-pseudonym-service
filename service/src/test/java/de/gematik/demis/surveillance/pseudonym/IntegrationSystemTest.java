@@ -140,6 +140,22 @@ class IntegrationSystemTest extends TestWithPostgresContainer {
   }
 
   @Test
+  void pseudonymsBelongToDifferentChains_unprocessableContent() {
+    executeRestCall(input("P1-Belongs-To-Chain-1", "P2-Belongs-To-Chain-1", REFERENCE_DAY));
+    executeRestCall(input("P3-Belongs-To-Chain-2", "P4-Belongs-To-Chain-2", REFERENCE_DAY));
+
+    // Note: the reference date of this request has no impact
+    final var request =
+        createRequest(input("P1-Belongs-To-Chain-1", "P4-Belongs-To-Chain-2", REFERENCE_DAY));
+
+    final ResponseEntity<String> response =
+        restTemplate.postForEntity(ENDPOINT, request, String.class);
+
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_CONTENT);
+    assertThat(response.getBody()).contains("PSEUDONYMS_BELONG_TO_DIFFERENT_CHAINS");
+  }
+
+  @Test
   void sequenceOfCallsForSamePatient() {
     // for all requests the input pseudonyms are equals
     final String pseudonym1 = "4-a";
@@ -294,12 +310,8 @@ class IntegrationSystemTest extends TestWithPostgresContainer {
   private String executeRestCall(final PseudonymInput input) {
     log.info("execute rest call for input: {}", input);
 
-    final var headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-    final HttpEntity<PseudonymInput> request = new HttpEntity<>(input, headers);
-
     final ResponseEntity<PseudonymOutput> response =
-        restTemplate.postForEntity(ENDPOINT, request, PseudonymOutput.class);
+        restTemplate.postForEntity(ENDPOINT, createRequest(input), PseudonymOutput.class);
 
     log.info("Response {}", response);
 
@@ -315,6 +327,12 @@ class IntegrationSystemTest extends TestWithPostgresContainer {
     assertThat(newPseudonym).isNotBlank();
 
     return newPseudonym;
+  }
+
+  private HttpEntity<PseudonymInput> createRequest(final PseudonymInput input) {
+    final var headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    return new HttpEntity<>(input, headers);
   }
 
   private PseudonymInput input(

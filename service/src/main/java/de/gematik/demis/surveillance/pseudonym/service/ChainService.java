@@ -27,8 +27,9 @@ package de.gematik.demis.surveillance.pseudonym.service;
  * #L%
  */
 
-import static de.gematik.demis.surveillance.pseudonym.service.ErrorCode.CHAIN_INCONSISTENT;
+import static de.gematik.demis.surveillance.pseudonym.service.ErrorCode.CHAIN_CONCURRENT_INSERT_CONFLICT;
 import static de.gematik.demis.surveillance.pseudonym.service.ErrorCode.CHAIN_INSERT_FAILED;
+import static de.gematik.demis.surveillance.pseudonym.service.ErrorCode.PSEUDONYMS_BELONG_TO_DIFFERENT_CHAINS;
 
 import de.gematik.demis.surveillance.pseudonym.entity.ChainEntity;
 import de.gematik.demis.surveillance.pseudonym.entity.PseudonymChainEntity;
@@ -142,7 +143,7 @@ class ChainService {
     } catch (final DataIntegrityViolationException ex) {
       final ChainResult dbChain = handleInsertException(ex, List.of(missingPseudonym));
       if (!chainId.equals(dbChain.chainId())) {
-        throw CHAIN_INCONSISTENT.exception(
+        throw CHAIN_CONCURRENT_INSERT_CONFLICT.exception(
             "missing pseudonym entry was created parallel with another chain id");
       }
     }
@@ -181,9 +182,8 @@ class ChainService {
     final boolean allMatch =
         entries.stream().skip(1).allMatch(entry -> entry.getChainId().equals(chainId));
     if (!allMatch) {
-      // should never happen
-      throw CHAIN_INCONSISTENT.exception(
-          "Inconsistent Database: For pseudonym tuple different chain ids found.");
+      throw PSEUDONYMS_BELONG_TO_DIFFERENT_CHAINS.exception(
+          "For pseudonym tuple different chain ids found.");
     }
     return chainId;
   }

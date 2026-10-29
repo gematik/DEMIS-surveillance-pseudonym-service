@@ -256,7 +256,8 @@ class ChainServiceTest {
     final ServiceException thrownException =
         catchThrowableOfType(ServiceException.class, () -> chainService.chain(TUPLE));
     assertThat(thrownException).isNotNull();
-    assertThat(thrownException.getErrorCode()).isEqualTo(ErrorCode.CHAIN_INCONSISTENT.getCode());
+    assertThat(thrownException.getErrorCode())
+        .isEqualTo(ErrorCode.CHAIN_CONCURRENT_INSERT_CONFLICT.getCode());
     assertThat(thrownException.getCause()).isNull();
     assertThat(thrownException.getMessage())
         .contains("missing pseudonym entry was created parallel with another chain id");
@@ -273,7 +274,8 @@ class ChainServiceTest {
     final ServiceException thrownException =
         catchThrowableOfType(ServiceException.class, () -> chainService.chain(TUPLE));
     assertThat(thrownException).isNotNull();
-    assertThat(thrownException.getErrorCode()).isEqualTo(ErrorCode.CHAIN_INCONSISTENT.getCode());
+    assertThat(thrownException.getErrorCode())
+        .isEqualTo(ErrorCode.PSEUDONYMS_BELONG_TO_DIFFERENT_CHAINS.getCode());
     assertThat(thrownException.getCause()).isNull();
     assertThat(thrownException.getMessage())
         .contains("For pseudonym tuple different chain ids found.");
