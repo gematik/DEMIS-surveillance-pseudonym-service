@@ -35,9 +35,10 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 @Getter
 enum ErrorCode {
-  CHAIN_INCONSISTENT(HttpStatus.INTERNAL_SERVER_ERROR),
+  CHAIN_CONCURRENT_INSERT_CONFLICT(HttpStatus.INTERNAL_SERVER_ERROR),
   CHAIN_INSERT_FAILED(HttpStatus.INTERNAL_SERVER_ERROR),
   CHAIN_MISSING(HttpStatus.INTERNAL_SERVER_ERROR),
+  PSEUDONYMS_BELONG_TO_DIFFERENT_CHAINS(HttpStatus.UNPROCESSABLE_CONTENT),
   ;
 
   private final HttpStatus httpStatus;

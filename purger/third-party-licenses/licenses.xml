@@ -209,7 +209,7 @@
     <dependency>
       <groupId>de.gematik.demis</groupId>
       <artifactId>surveillance-pseudonym-db-schema</artifactId>
-      <version>1.2.1-SNAPSHOT</version>
+      <version>1.2.2-SNAPSHOT</version>
       <licenses>
         <license>
           <name>Licensed under the EUPL 1.2</name>
@@ -923,7 +923,7 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>42.7.13</version>
+      <version>42.7.14</version>
       <licenses>
         <license>
           <name>BSD-2-Clause</name>

@@ -197,7 +197,7 @@
     <dependency>
       <groupId>com.squareup.okio</groupId>
       <artifactId>okio-jvm</artifactId>
-      <version>3.9.1</version>
+      <version>3.18.2</version>
       <licenses>
         <license>
           <name>The Apache Software License, Version 2.0</name>
@@ -287,7 +287,7 @@
     <dependency>
       <groupId>de.gematik.demis</groupId>
       <artifactId>surveillance-pseudonym-db-schema</artifactId>
-      <version>1.2.1-SNAPSHOT</version>
+      <version>1.2.2-SNAPSHOT</version>
       <licenses>
         <license>
           <name>Licensed under the EUPL 1.2</name>
@@ -1433,7 +1433,7 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>42.7.13</version>
+      <version>42.7.14</version>
       <licenses>
         <license>
           <name>BSD-2-Clause</name>
@@ -2523,7 +2523,7 @@
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>swagger-ui</artifactId>
-      <version>5.32.15</version>
+      <version>5.33.1</version>
       <licenses>
         <license>
           <name>Apache-2.0</name>

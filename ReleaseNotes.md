@@ -2,6 +2,10 @@
  
 # Release Notes Surveillance-Pseudonym-Service
 
+## Release 1.2.2
+- Updated minor/patch versions of dependencies
+- Requests with pseudonyms belonging to different chains now return status code 422 instead of 500
+
 ## Release 1.2.1
 - added prometheus pod annotations to purger helm chart
 - optimized custom environment variables handling in helm chart
